@@ -133,7 +133,7 @@ public struct DeviceInfo: Sendable {
         buildNumber = bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
         bundleIdentifier = bundle.bundleIdentifier ?? ""
 
-        isSimulator = rawIdentifier == "i386" || rawIdentifier == "x86_64" || rawIdentifier == "arm64" && Self.isRunningInSimulator()
+        isSimulator = Self.isRunningInSimulator()
         isDebugBuild = Self.debugBuild()
         isTestFlight = Self.detectTestFlight(bundle: bundle)
 
