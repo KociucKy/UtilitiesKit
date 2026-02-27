@@ -37,4 +37,36 @@ struct CollectionExtensionsTests {
         let items = [Int]()
         #expect(items[safe: 0] == nil)
     }
+
+    // MARK: - first(upTo:)
+
+    @Test("returns first N elements")
+    func firstUpToN() {
+        let result = [1, 2, 3, 4, 5].first(upTo: 3)
+        #expect(Array(result) == [1, 2, 3])
+    }
+
+    @Test("count exceeding length returns full collection")
+    func firstUpToExceedsLength() {
+        let result = [1, 2].first(upTo: 10)
+        #expect(Array(result) == [1, 2])
+    }
+
+    @Test("count of zero returns empty")
+    func firstUpToZero() {
+        let result = [1, 2, 3].first(upTo: 0)
+        #expect(Array(result) == [])
+    }
+
+    @Test("negative count returns empty")
+    func firstUpToNegative() {
+        let result = [1, 2, 3].first(upTo: -5)
+        #expect(Array(result) == [])
+    }
+
+    @Test("first(upTo:) on empty collection returns empty")
+    func firstUpToEmptyCollection() {
+        let result = [Int]().first(upTo: 3)
+        #expect(Array(result) == [])
+    }
 }

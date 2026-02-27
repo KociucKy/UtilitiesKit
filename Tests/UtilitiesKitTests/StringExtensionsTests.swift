@@ -77,4 +77,83 @@ struct StringExtensionsTests {
     func initialsUppercased() {
         #expect("john doe".initials() == "JD")
     }
+
+    // MARK: - clipped
+
+    @Test("clips string to maxCharacters")
+    func clipsToMax() {
+        #expect("Hello, world!".clipped(maxCharacters: 5) == "Hello")
+    }
+
+    @Test("clipping shorter string returns full string")
+    func clippingShorterStringReturnsFull() {
+        #expect("Hi".clipped(maxCharacters: 10) == "Hi")
+    }
+
+    @Test("clipping to zero returns empty string")
+    func clippingToZeroReturnsEmpty() {
+        #expect("Hello".clipped(maxCharacters: 0) == "")
+    }
+
+    @Test("clipping empty string returns empty string")
+    func clippingEmptyString() {
+        #expect("".clipped(maxCharacters: 5) == "")
+    }
+
+    // MARK: - replacingSpacesWithUnderscores
+
+    @Test("replaces spaces with underscores")
+    func replacesSpaces() {
+        #expect("hello world".replacingSpacesWithUnderscores() == "hello_world")
+    }
+
+    @Test("multiple spaces all replaced")
+    func replacesMultipleSpaces() {
+        #expect("a b c".replacingSpacesWithUnderscores() == "a_b_c")
+    }
+
+    @Test("string with no spaces is unchanged")
+    func noSpacesUnchanged() {
+        #expect("hello".replacingSpacesWithUnderscores() == "hello")
+    }
+
+    // MARK: - converting
+
+    @Test("converts String")
+    func convertsString() {
+        #expect(String.converting("hello") == "hello")
+    }
+
+    @Test("converts Int")
+    func convertsInt() {
+        #expect(String.converting(42) == "42")
+    }
+
+    @Test("converts Double")
+    func convertsDouble() {
+        #expect(String.converting(3.14) == "3.14")
+    }
+
+    @Test("converts Bool")
+    func convertsBool() {
+        #expect(String.converting(true) == "true")
+        #expect(String.converting(false) == "false")
+    }
+
+    @Test("converts array to sorted comma-joined string")
+    func convertsArray() {
+        #expect(String.converting([3, 1, 2]) == "1,2,3")
+    }
+
+    @Test("converts CustomStringConvertible")
+    func convertsCustomStringConvertible() {
+        struct Foo: CustomStringConvertible { var description: String { "foo" } }
+        #expect(String.converting(Foo()) == "foo")
+    }
+
+    @Test("returns nil for unrecognised type")
+    func returnsNilForUnknown() {
+        struct Unknown {}
+        #expect(String.converting(Unknown()) == nil)
+    }
 }
