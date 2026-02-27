@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 import UIKit
 import Darwin
 
@@ -183,3 +184,4 @@ public struct DeviceInfo: Sendable {
         #endif
     }
 }
+#endif
